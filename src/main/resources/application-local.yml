@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: "empMgmt"
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:file:D:/TERZO/db/empdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: sa
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      use-new-id-generator-mappings: false
+      ddl-auto: none
+
+server:
+  port: 9000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  security:
+    enabled: false
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  
