@@ -4,15 +4,15 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.terzocloud.empmgmt.model.Employee;
 
-public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Long>,JpaSpecificationExecutor<Employee> {
+public interface EmployeeRepository extends JpaRepository<Employee, Long>,JpaSpecificationExecutor<Employee> {
 
 	List<Employee> findAllByName(String name);
 	
@@ -25,5 +25,5 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 	@Modifying
 	@Query(value= "update Employee e set e.manager_id = :managerEmpId where e.id = :empId" , nativeQuery = true)
 	void mapManagerToEmp(@Param("managerEmpId") Long managerEmpId,@Param("empId") Long empId);
-
+	
 }

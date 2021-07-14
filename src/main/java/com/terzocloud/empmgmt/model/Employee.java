@@ -47,12 +47,12 @@ public class Employee{
 
 	private BigDecimal salary;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="DEPARTMENT_ID")
 	@JsonIgnoreProperties(value = {"employees","id"})
 	private Department department;  
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="MANAGER_ID")
 	@JsonIgnoreProperties(value = {"department","id","manager","salary"})
 	private Employee manager;  

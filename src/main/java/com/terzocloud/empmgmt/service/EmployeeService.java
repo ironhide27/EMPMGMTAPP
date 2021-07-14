@@ -56,7 +56,6 @@ public class EmployeeService{
 		}else {
 			throw new ManagerAssignmentException("Manager not found");	
 		}
-		
 		return getEmployeeById(empId);
 	}
 	

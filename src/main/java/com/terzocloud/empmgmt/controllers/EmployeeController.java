@@ -64,7 +64,7 @@ public class EmployeeController{
 		return  new ResponseEntity<Employee>(empService.mapEmpToDept(requestVO.getEmpId(),requestVO.getDeptId()),HttpStatus.OK);
 	}
 	
-	@Operation(summary = "Map Manager to an Employee",method = "POST",description = "Requires empId and managerEmpId sent as request params",parameters = {@Parameter(name = "empId",required = true),@Parameter(name = "managerEmpId",required = true)})
+	@Operation(summary = "Map Manager to an Employee",method = "POST",description = "Requires empId and managerEmpId sent as request params")
 	@PostMapping(path = "/update-manager")
 	public ResponseEntity mapManagerToEmp(@RequestBody CommonRequestVO requestVO) {
 		try {
