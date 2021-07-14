@@ -15,7 +15,6 @@ import com.terzocloud.empmgmt.exception.ManagerAssignmentException;
 import com.terzocloud.empmgmt.model.Employee;
 import com.terzocloud.empmgmt.repositories.EmployeeRepository;
 import com.terzocloud.empmgmt.specification.EmployeeSpecifications;
-import com.terzocloud.empmgmt.util.Constants;
 import com.terzocloud.empmgmt.util.DesignationEnum;
 
 @Service

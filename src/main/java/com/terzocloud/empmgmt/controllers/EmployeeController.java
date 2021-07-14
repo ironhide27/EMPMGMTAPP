@@ -52,7 +52,8 @@ public class EmployeeController{
 		return empService.addEmployee(employee.getName(),employee.getSalary(),employee.getDesignation().toString());
 	}
 	
-	@Operation(summary = "Map employee to a department",method = "POST",description = "Requires empId and deptId sent as request params",parameters = {@Parameter(name = "empId",required = true),@Parameter(name = "deptId",required = true)})
+	@Operation(summary = "Map employee to a department",method = "POST",description = "Requires empId and deptId sent as request params",requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = {@Content(examples = 
+			@ExampleObject(value = "{\"empId\":3,\"deptId\":1}"))}))
 	@PostMapping(path = "/update-department")
 	public ResponseEntity mapEmpToDept(@RequestBody CommonRequestVO requestVO) {
 		
@@ -64,7 +65,8 @@ public class EmployeeController{
 		return  new ResponseEntity<Employee>(empService.mapEmpToDept(requestVO.getEmpId(),requestVO.getDeptId()),HttpStatus.OK);
 	}
 	
-	@Operation(summary = "Map Manager to an Employee",method = "POST",description = "Requires empId and managerEmpId sent as request params")
+	@Operation(summary = "Map Manager to an Employee",method = "POST",description = "Requires empId and managerEmpId sent as request params",requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = {@Content(examples = 
+			@ExampleObject(value = "{\"empId\":3,\"managerEmpId\":1}"))}))
 	@PostMapping(path = "/update-manager")
 	public ResponseEntity mapManagerToEmp(@RequestBody CommonRequestVO requestVO) {
 		try {

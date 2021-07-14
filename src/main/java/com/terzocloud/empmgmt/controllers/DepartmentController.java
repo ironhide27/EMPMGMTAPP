@@ -18,6 +18,8 @@ import com.terzocloud.empmgmt.vo.CommonRequestVO;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 
 
 @RestController
@@ -27,13 +29,15 @@ public class DepartmentController{
 	@Autowired
 	private DepartmentService deptService;
 	
-	@Operation(summary = "Add a new department",method = "POST",parameters = {@Parameter(name = "departmentName",required = true)})
+	@Operation(summary = "Add a new department",method = "POST",requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = {@Content(examples = 
+			@ExampleObject(value = "{\"departmentName\":\"deptName\"}"))}))
 	@PostMapping(path = "/add")
 	public Department addDepartment(@RequestBody CommonRequestVO requestVO) {
 		return deptService.addDepartment(requestVO.getDepartmentName());
 	}
 	
-	@Operation(summary = "Update department name",method = "POST",parameters = {@Parameter(name = "departmentId",required = true),@Parameter(name = "departmentName",required = true)})
+	@Operation(summary = "Update department name",method = "POST",requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = {@Content(examples = 
+			@ExampleObject(value = "{\"deptId\":3,\"departmentName\":\"deptName\"}"))}))
 	@PostMapping(path = "/update-name")
 	public ResponseEntity updateDeptName(@RequestBody CommonRequestVO requestVO) {
 		try {
