@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.terzocloud.empmgmt.listener.EmployeeListener;
+import com.terzocloud.empmgmt.util.Constants;
 import com.terzocloud.empmgmt.util.DesignationEnum;
 
 import lombok.Getter;
@@ -67,23 +68,23 @@ public class Employee{
 
 	@PrePersist
 	public void logNewEmpAttempt() {
-		log.info("Attempting to add new employee with username: " + name);
+		log.info(Constants.LISTENER_MARKER,"Attempting to add new employee with username: " + name);
 	}
 
 	@PostPersist
 	public void logNewEmpAdded() {
-		log.info("Added employee '" + name + "' with ID: " + id);
+		log.info(Constants.LISTENER_MARKER,"Added employee '" + name + "' with ID: " + id);
 	}
 
 
 	@PreUpdate
 	public void logEmpUpdateAttempt() {
-		log.info("Attempting to update employee: " + name);
+		log.info(Constants.LISTENER_MARKER,"Attempting to update employee: " + name);
 	}
 
 	@PostUpdate
 	public void logEmpUpdate() {
-		log.info("Updated employee: " + name);
+		log.info(Constants.LISTENER_MARKER,"Updated employee: " + name);
 
 
 	}

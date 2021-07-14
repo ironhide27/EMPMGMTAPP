@@ -5,7 +5,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.terzocloud.empmgmt.exception.ManagerAssignmentException;
@@ -57,19 +60,13 @@ public class EmployeeService{
 		return getEmployeeById(empId);
 	}
 	
-	public Page<Employee> getAllEmpsGTSalary(BigDecimal salary,String criteria,Long deptId,String sortFieldName,String sortOrder,Pageable pageable){
+	public Page<Employee> getAllEmpsGTSalary(BigDecimal salary,String criteria,Long deptId,String sortFieldName,String sortOrder){
+		PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Direction.fromString(sortOrder),sortFieldName));
 		if(deptId!=null) {
-			return empRepo.findAll(EmployeeSpecifications.deptSpec(deptId).and(EmployeeSpecifications.salarySpec(salary,criteria)),pageable);
+			return empRepo.findAll(EmployeeSpecifications.deptSpec(deptId).and(EmployeeSpecifications.salarySpec(salary,criteria)),pageRequest);
 		}else {
-			return empRepo.findAll(EmployeeSpecifications.salarySpec(salary,criteria),pageable);
+			return empRepo.findAll(EmployeeSpecifications.salarySpec(salary,criteria),pageRequest);
 		}
 	}
 	
-	/*
-	 * public List<Employee> getAllEmpsGTSalaryForDept(BigDecimal salary,Long
-	 * deptId){ return
-	 * empRepo.findAll(EmployeeSpecifications.isFromDepartment(deptId).and(
-	 * EmployeeSpecifications.isSalaryGreater(salary)),Sort.by(Direction.DESC,
-	 * "salary")); }
-	 */
 }

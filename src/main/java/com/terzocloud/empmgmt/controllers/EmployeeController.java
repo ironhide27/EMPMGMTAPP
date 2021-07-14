@@ -1,11 +1,11 @@
 package com.terzocloud.empmgmt.controllers;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,7 +76,7 @@ public class EmployeeController{
 	
 	@Operation(summary = "Retrieve all employee details",method = "GET")
 	@GetMapping(path = "/all",produces = {"application/json"})
-	public Page<Employee> getEmpById(Pageable page) {
+	public Page<Employee> getEmpById(PageRequest page) {
 		return empService.getAllEmps(page);
 	}
 	
@@ -95,8 +95,8 @@ public class EmployeeController{
 	
 	@Operation(summary = "Retrieve employees based on criteria",method = "GET")
 	@GetMapping(path = "/filter")
-	public Page<Employee> getAllEmpsGTSalary(@RequestParam(required = true) BigDecimal salary,@RequestParam(required = true) String criteria,@RequestParam(required = false) Long deptId,@RequestParam(required = true) String sortFieldName,@RequestParam(required = true) String sortOrder,Pageable pageable) {
-		return empService.getAllEmpsGTSalary(salary,criteria,deptId,sortFieldName,sortOrder,pageable);
+	public Page<Employee> getAllEmpsGTSalary(@RequestParam(required = true) BigDecimal salary,@RequestParam(required = true) String criteria,@RequestParam(required = false) Long deptId,@RequestParam(required = true) String sortFieldName,@RequestParam(required = true) String sortOrder) {
+		return empService.getAllEmpsGTSalary(salary,criteria,deptId,sortFieldName,sortOrder);
 	}
 	
 	/*@Operation(summary = "Retrieve employees with salary greater than input for a given department id. Sorted by salary desc",method = "POST")
