@@ -25,17 +25,17 @@ public class EmployeeListener{
 	@PreUpdate
 	@PreRemove
 	private void beforeUpdate(Employee employee) {
-		log.info(Constants.LISTENER_MARKER,"About to update/delete employee: " + employee.getId());
+		log.info(Constants.LISTENER_MARKER,"About to update/delete employee: " + employee.getId() +"::" + employee.getName());
 	}
 
 	@PostPersist
 	@PostUpdate
 	@PostRemove
 	private void afterAnyUpdate(Employee employee) {
-		log.info(Constants.LISTENER_MARKER,"update complete for employee: " + employee.getId());
+		log.info(Constants.LISTENER_MARKER,"update complete for employee: " + employee.getId() +"::" + employee.getName());
 	}
 
 	@PostLoad
 	private void afterLoad(Employee employee) {
-		log.info(Constants.LISTENER_MARKER,"employee loaded from database: " + employee.getId());
+		log.info(Constants.LISTENER_MARKER,"employee loaded from database: " + employee.getId() +"::" + employee.getName());
 	}}

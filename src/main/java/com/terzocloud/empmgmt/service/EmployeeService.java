@@ -16,6 +16,7 @@ import com.terzocloud.empmgmt.model.Employee;
 import com.terzocloud.empmgmt.repositories.EmployeeRepository;
 import com.terzocloud.empmgmt.specification.EmployeeSpecifications;
 import com.terzocloud.empmgmt.util.Constants;
+import com.terzocloud.empmgmt.util.DesignationEnum;
 
 @Service
 public class EmployeeService{
@@ -42,13 +43,16 @@ public class EmployeeService{
 	}
 	
 	public Employee mapManagerToEmp(Long empId,Long managerEmpId)throws Exception {
+		if(empId.longValue()==managerEmpId.longValue()) {
+			throw new ManagerAssignmentException("You cannot be your Manager!");	
+		}
 		Employee employee = getEmployeeById(empId);
 		if(employee==null) {
 			throw new ManagerAssignmentException("Employee not found");	
 		}
 		Employee manager = getEmployeeById(managerEmpId);
 		if(manager!=null) {
-			if(Constants.MANAGER_DESIGNATION.equalsIgnoreCase(manager.getDesignation().toString())) {
+			if(DesignationEnum.MANAGER.toString().equalsIgnoreCase(manager.getDesignation().toString())) {
 				empRepo.mapManagerToEmp(managerEmpId,empId);
 			}else {
 				throw new ManagerAssignmentException("Only Employees with MANAGER Designation can be assigned");	
@@ -56,7 +60,9 @@ public class EmployeeService{
 		}else {
 			throw new ManagerAssignmentException("Manager not found");	
 		}
-		return getEmployeeById(empId);
+		employee = getEmployeeById(empId);
+		employee.getManager();
+		return employee;
 	}
 	
 	public Page<Employee> getAllEmpsGTSalary(BigDecimal salary,String criteria,Long deptId,String sortFieldName,String sortOrder){
