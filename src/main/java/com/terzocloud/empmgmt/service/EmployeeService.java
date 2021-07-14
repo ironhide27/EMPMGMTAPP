@@ -3,6 +3,7 @@ package com.terzocloud.empmgmt.service;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.terzocloud.empmgmt.exception.EmployeeNotFoundException;
 import com.terzocloud.empmgmt.exception.ManagerAssignmentException;
 import com.terzocloud.empmgmt.model.Employee;
 import com.terzocloud.empmgmt.repositories.EmployeeRepository;
@@ -26,7 +28,6 @@ public class EmployeeService{
 		return empRepo.findAll(pageable);
 	}
 	
-	
 	public Employee getEmployeeById(Long empId) {
 		Optional<Employee> optionalEmp = empRepo.findById(empId);
 		return optionalEmp.isPresent()?optionalEmp.get():null;
@@ -34,6 +35,23 @@ public class EmployeeService{
 	
 	public Employee addEmployee(String name,BigDecimal salary, String designation) {
 		return empRepo.save(new Employee(name,salary,designation));
+	}
+	
+	public Employee updateEmployee(Long empId,String name,BigDecimal salary, DesignationEnum designation)throws Exception {
+		Employee employee = getEmployeeById(empId);
+		if(employee==null) {
+			throw new EmployeeNotFoundException("Employee not found");	
+		}
+		if(StringUtils.isNotEmpty(name)) {
+			employee.setName(name);
+		}
+		if(salary!=null) {
+			employee.setSalary(salary);
+		}
+		if(designation!=null) {
+			employee.setDesignation(designation);
+		}
+		return empRepo.save(employee);
 	}
 	
 	public Employee mapEmpToDept(Long empId,Long deptId) {

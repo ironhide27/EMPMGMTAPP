@@ -6,7 +6,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +22,6 @@ import com.terzocloud.empmgmt.service.EmployeeService;
 import com.terzocloud.empmgmt.vo.CommonRequestVO;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 
@@ -46,10 +44,17 @@ public class EmployeeController{
 		return empService.addEmployee(employee.getName(),employee.getSalary(),employee.getDesignation().toString());
 	}
 	
-	@Operation(summary = "Update employee details",description = "{\"name\": \"Tony\", \"salary\" : 259999.00, \"designation\" : \"ARCHITECT\"}")
+	@Operation(summary = "Update employee details",description = "{\"id\":1,\"name\": \"Tony\", \"salary\" : 259999.00, \"designation\" : \"ARCHITECT\"}",
+			requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = {@Content(examples = 
+			@ExampleObject(value = "{\"id\":1,\"name\": \"Tony\", \"salary\" : 259999.00, \"designation\" : \"ARCHITECT\"}"))}))
 	@PostMapping(path = "/update",consumes = {"application/json"},produces = {"application/json"})
-	public Employee updateEmpDetails(@RequestBody Employee employee) {
-		return empService.addEmployee(employee.getName(),employee.getSalary(),employee.getDesignation().toString());
+	public ResponseEntity updateEmpDetails(@RequestBody Employee employee) {
+		try {
+			return new ResponseEntity<Employee>(empService.updateEmployee(employee.getId(),employee.getName(),employee.getSalary(),employee.getDesignation()),HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 	}
 	
 	@Operation(summary = "Map employee to a department",method = "POST",description = "Requires empId and deptId sent as request params",requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = {@Content(examples = 
