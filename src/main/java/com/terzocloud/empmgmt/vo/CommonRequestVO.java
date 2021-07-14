@@ -11,4 +11,5 @@ public class CommonRequestVO{
 	private long empId;
 	private long deptId;
 	private long managerEmpId;
+	private String departmentName;
 }
