@@ -6,8 +6,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.terzocloud.empmgmt.entity.Department;
-import com.terzocloud.empmgmt.entity.Employee;
+import com.terzocloud.empmgmt.model.Department;
+import com.terzocloud.empmgmt.model.Employee;
 import com.terzocloud.empmgmt.exception.DepartmentNotFoundException;
 import com.terzocloud.empmgmt.repositories.DepartmentRepository;
 

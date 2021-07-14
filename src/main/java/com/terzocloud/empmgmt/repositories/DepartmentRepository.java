@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.terzocloud.empmgmt.entity.Department;
+import com.terzocloud.empmgmt.model.Department;
 
 public interface DepartmentRepository extends JpaRepository<Department, Long>,JpaSpecificationExecutor<Department> {
 	List<Department> findAllByName(String name);
