@@ -37,19 +37,19 @@ public class EmployeeService{
 		return empRepo.save(new Employee(name,salary,designation));
 	}
 	
-	public Employee updateEmployee(Long empId,String name,BigDecimal salary, DesignationEnum designation)throws Exception {
-		Employee employee = getEmployeeById(empId);
+	public Employee updateEmployee(Employee emp)throws Exception {
+		Employee employee = getEmployeeById(emp.getId());
 		if(employee==null) {
 			throw new EmployeeNotFoundException("Employee not found");	
 		}
-		if(StringUtils.isNotEmpty(name)) {
-			employee.setName(name);
+		if(StringUtils.isNotEmpty(emp.getName())) {
+			employee.setName(emp.getName());
 		}
-		if(salary!=null) {
-			employee.setSalary(salary);
+		if(emp.getSalary()!=null) {
+			employee.setSalary(emp.getSalary());
 		}
-		if(designation!=null) {
-			employee.setDesignation(designation);
+		if(emp.getDesignation()!=null) {
+			employee.setDesignation(emp.getDesignation());
 		}
 		return empRepo.save(employee);
 	}

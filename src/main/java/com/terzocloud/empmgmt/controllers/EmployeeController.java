@@ -50,7 +50,7 @@ public class EmployeeController{
 	@PostMapping(path = "/update",consumes = {"application/json"},produces = {"application/json"})
 	public ResponseEntity updateEmpDetails(@RequestBody Employee employee) {
 		try {
-			return new ResponseEntity<Employee>(empService.updateEmployee(employee.getId(),employee.getName(),employee.getSalary(),employee.getDesignation()),HttpStatus.OK);
+			return new ResponseEntity<Employee>(empService.updateEmployee(employee),HttpStatus.OK);
 		}catch(Exception e) {
 			return new ResponseEntity<String>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
